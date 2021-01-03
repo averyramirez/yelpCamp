@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
+const Joi = require('joi');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
@@ -74,8 +75,9 @@ app.all('*', (req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-    const {statusCode = 500, message = 'Something went wrong'} = err;
-    res.status(statusCode).send(message)
+    const { statusCode = 500 } = err;
+    if(!err.message) err.message = 'Something went wrong!'
+    res.status(statusCode).render('error', {err})
 });
 
 
