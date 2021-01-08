@@ -81,6 +81,10 @@ app.delete('/campgrounds/:id', catchAsync(async (req, res) => {
     res.redirect('/campgrounds');
 }));
 
+app.post('/campgrounds/:id/reviews', catchAsync(async(req, res) => {
+    res.send('You made it!')
+}))
+
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
 })
@@ -94,3 +98,4 @@ app.use((err, req, res, next) => {
 app.listen(3000, () => {
     console.log('Serving on port 3000')
 })
+
